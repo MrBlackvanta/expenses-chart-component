@@ -5,6 +5,9 @@
 @source not "../**/*.test.tsx";
 
 @theme {
+  --breakpoint-*: initial;
+  --breakpoint-sm: 37rem;
+
   --color-*: initial;
   --color-white: #ffffff;
   --color-primary: #ec755d;
