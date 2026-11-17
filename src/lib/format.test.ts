@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vite-plus/test";
-import { formatUsd } from "./format";
+import { formatChange, formatUsd } from "./format";
 
 describe("formatUsd", () => {
   it.each([
@@ -13,5 +13,22 @@ describe("formatUsd", () => {
     [-17.45, "-$17.45"],
   ])("formats %d as %s", (amount, expected) => {
     expect(formatUsd(amount)).toBe(expected);
+  });
+});
+
+describe("formatChange", () => {
+  it.each([
+    [0.024, "+2.4%"],
+    [-0.015, "-1.5%"],
+    [0.1, "+10%"],
+    [0.12345, "+12.3%"],
+    [1, "+100%"],
+    [0, "0%"],
+    [-0, "0%"],
+    [0.0004, "0%"],
+    [-0.0004, "0%"],
+    [0.0005, "+0.1%"],
+  ])("formats %d as %s", (ratio, expected) => {
+    expect(formatChange(ratio)).toBe(expected);
   });
 });
