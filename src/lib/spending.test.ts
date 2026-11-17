@@ -54,15 +54,15 @@ describe("scaleToMax", () => {
 });
 
 describe("parseSpending", () => {
-  it("keeps known days in order", () => {
+  it("keeps known days in order, a zero amount included", () => {
     expect(
       parseSpending([
         { day: "sun", amount: 25.48 },
-        { day: "mon", amount: 17.45 },
+        { day: "mon", amount: 0 },
       ]),
     ).toEqual([
       { day: "sun", amount: 25.48 },
-      { day: "mon", amount: 17.45 },
+      { day: "mon", amount: 0 },
     ]);
   });
 
@@ -76,6 +76,12 @@ describe("parseSpending", () => {
         { day: "mon", amount: 2 },
       ],
       'Duplicate day "mon"',
+    ],
+    [[{ day: "tue", amount: -0.01 }], 'Invalid amount -0.01 for "tue"'],
+    [[{ day: "tue", amount: Number.NaN }], 'Invalid amount NaN for "tue"'],
+    [
+      [{ day: "tue", amount: Number.POSITIVE_INFINITY }],
+      'Invalid amount Infinity for "tue"',
     ],
   ])("rejects %j", (entries, message) => {
     expect(() => parseSpending(entries)).toThrow(message);

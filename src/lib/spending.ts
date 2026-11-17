@@ -31,6 +31,8 @@ export function parseSpending(
       throw new Error(`Unknown day "${day}" in spending data`);
     if (seen.has(day))
       throw new Error(`Duplicate day "${day}" in spending data`);
+    if (!Number.isFinite(amount) || amount < 0)
+      throw new Error(`Invalid amount ${amount} for "${day}" in spending data`);
     seen.add(day);
     return { day, amount };
   });

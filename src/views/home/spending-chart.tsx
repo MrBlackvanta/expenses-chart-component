@@ -32,6 +32,7 @@ export default function SpendingChart({ days }: SpendingChartProps) {
           day={day}
           amount={amount}
           height={heights[index]}
+          order={index}
           isToday={day === today}
           showTooltip={!tooltipsDismissed}
           onReveal={() => setTooltipsDismissed(false)}
@@ -43,6 +44,7 @@ export default function SpendingChart({ days }: SpendingChartProps) {
 
 interface BarProps extends DailySpend {
   height: number;
+  order: number;
   isToday: boolean;
   showTooltip: boolean;
   onReveal: () => void;
@@ -52,6 +54,7 @@ function Bar({
   day,
   amount,
   height,
+  order,
   isToday,
   showTooltip,
   onReveal,
@@ -63,13 +66,18 @@ function Bar({
       <div className="flex h-37.5 items-end">
         <button
           type="button"
-          style={{ "--v-height": `${height * 100}%` } as CSSProperties}
+          style={
+            {
+              "--v-height": `${height * 100}%`,
+              "--v-order": order,
+            } as CSSProperties
+          }
           onPointerEnter={onReveal}
           onFocus={onReveal}
-          className={`group/bar relative h-(--v-height) w-full rounded-bar-sm ease-out motion-safe:transition-[background-color] sm:rounded-bar ${
+          className={`group/bar relative h-(--v-height) w-full rounded-bar-sm before:absolute before:inset-0 before:origin-bottom before:rounded-[inherit] before:ease-out motion-safe:before:animate-bar-rise motion-safe:before:transition-[background-color] sm:rounded-bar ${
             isToday
-              ? "bg-accent hover:bg-accent-hover focus-visible:bg-accent-hover"
-              : "bg-primary hover:bg-primary-hover focus-visible:bg-primary-hover"
+              ? "before:bg-accent hover:before:bg-accent-hover focus-visible:before:bg-accent-hover"
+              : "before:bg-primary hover:before:bg-primary-hover focus-visible:before:bg-primary-hover"
           }`}
         >
           <span className="sr-only">{label}</span>
