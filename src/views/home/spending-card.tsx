@@ -1,5 +1,6 @@
-import { MONTH_CHANGE, MONTH_TOTAL } from "@/data";
+import { MONTH_CHANGE, MONTH_TOTAL, SPENDING } from "@/data";
 import { formatChange, formatUsd } from "@/lib";
+import SpendingChart from "./spending-chart";
 
 export default function SpendingCard() {
   return (
@@ -7,6 +8,7 @@ export default function SpendingCard() {
       <h1 className="text-heading-sm text-balance sm:text-heading">
         Spending - Last 7 days
       </h1>
+      <SpendingChart days={SPENDING} />
       <hr className="my-6 h-0.5 rounded-full border-0 bg-canvas sm:my-8" />
       <div className="flex flex-wrap items-baseline-last gap-x-4 gap-y-2">
         <dl className="grid gap-1 sm:gap-0">
